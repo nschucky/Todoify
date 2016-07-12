@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19EAFFF81D35B4D5004C1BF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 19EAFFF71D35B4D5004C1BF8 /* .gitignore */; };
 		9C53BAD81CE132D90081C898 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C53BAD71CE132D90081C898 /* CreateTaskViewController.swift */; };
 		9C53BADA1CE13EE50081C898 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C53BAD91CE13EE50081C898 /* User.swift */; };
 		9C5AAB1C1CE26B42001ABA8C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5AAB1B1CE26B42001ABA8C /* TestData.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		136F44DE7453B9C0DA188FE0 /* Pods-Todoify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todoify/Pods-Todoify.debug.xcconfig"; sourceTree = "<group>"; };
+		19EAFFF71D35B4D5004C1BF8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2DD954CA120E75C4F5E87E31 /* Pods-Todoify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todoify/Pods-Todoify.release.xcconfig"; sourceTree = "<group>"; };
 		9C53BAD71CE132D90081C898 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		9C53BAD91CE13EE50081C898 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		9CE6BE8A1CDE38AC003A6FD3 = {
 			isa = PBXGroup;
 			children = (
+				19EAFFF71D35B4D5004C1BF8 /* .gitignore */,
 				9CE6BEA81CDE38CB003A6FD3 /* Podfile */,
 				9CE6BE951CDE38AC003A6FD3 /* Todoify */,
 				9CE6BE941CDE38AC003A6FD3 /* Products */,
@@ -194,6 +197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19EAFFF81D35B4D5004C1BF8 /* .gitignore in Resources */,
 				9CE6BEA11CDE38AC003A6FD3 /* LaunchScreen.storyboard in Resources */,
 				9CE6BE9E1CDE38AC003A6FD3 /* Assets.xcassets in Resources */,
 				9CE6BEA91CDE38CB003A6FD3 /* Podfile in Resources */,
