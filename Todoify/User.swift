@@ -21,4 +21,13 @@
  */
 
 import Foundation
+import RealmSwift
 
+class User: Object {
+    dynamic var name = ""
+    
+    convenience init(name: String) {
+        self.init()
+        self.name = name
+    }
+}

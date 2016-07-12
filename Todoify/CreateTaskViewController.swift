@@ -24,19 +24,34 @@ import UIKit
 import RealmSwift
 
 class CreateTaskViewController: UITableViewController {
-  
-  @IBOutlet weak var taskTitle: UITextField!
-  @IBOutlet weak var taskPrio: UISegmentedControl!
-  @IBOutlet weak var taskUsers: UISegmentedControl!
-  
-  @IBAction func createTask(sender: AnyObject) {
     
-    navigationController!.popViewControllerAnimated(true)
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+    @IBOutlet weak var taskTitle: UITextField!
+    @IBOutlet weak var taskPrio: UISegmentedControl!
+    @IBOutlet weak var taskUsers: UISegmentedControl!
     
-    taskTitle.becomeFirstResponder()
-  }
+    let users: [User] = {
+        let realm = try! Realm()
+        return Array(realm.objects(User))
+    }()
+    
+    @IBAction func createTask(sender: AnyObject) {
+        
+        let realm = try! Realm()
+        let task = Task(title: taskTitle.text!, priority: taskPrio.selectedSegmentIndex)
+        try! realm.write {
+            realm.add(task)
+        }
+        
+        navigationController!.popViewControllerAnimated(true)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        taskUsers.removeAllSegments()
+        for user in users {
+            taskUsers.insertSegmentWithTitle(user.name, atIndex: taskUsers.numberOfSegments, animated: false)
+        }
+        taskUsers.selectedSegmentIndex = 0
+        taskTitle.becomeFirstResponder()
+    }
 }

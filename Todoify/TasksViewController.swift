@@ -27,8 +27,19 @@ class TasksViewController: UITableViewController {
     
     @IBOutlet weak var filterButton: UIButton!
     
-    var tasks = [String]()
+    var tasks: Results<Task>!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let realm = try! Realm()
+        tasks = realm.objects(Task)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     
     @IBAction func toggleFilter(sender: UIButton) {
     }
@@ -40,7 +51,8 @@ class TasksViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TaskCell") as! TaskCell
-        
+        let task = tasks[indexPath.row]
+        cell.configureCellForTask(task)
         return cell
     }
     

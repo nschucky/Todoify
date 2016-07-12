@@ -24,17 +24,29 @@ import UIKit
 import RealmSwift
 
 class TaskCell: UITableViewCell {
-  
-  @IBOutlet weak var title: UILabel!
-  @IBOutlet weak var priority: UILabel!
-  @IBOutlet weak var check: UIButton!
-  @IBOutlet weak var spinner: UIActivityIndicatorView!
-  
-  override func awakeFromNib() {
     
-  }
-  
-  @IBAction func toggleImageChecked(sender: UIButton) {
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var priority: UILabel!
+    @IBOutlet weak var check: UIButton!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-  }
+    var taskId: String?
+    
+    func configureCellForTask(task: Task) {
+        taskId = task.taskId
+        
+        check.selected = task.done
+        title.text = task.title
+        priority.text = task.priorityText
+        priority.textColor = task.priorityColor
+        spinner.hidden = true
+    }
+    
+    override func awakeFromNib() {
+        
+    }
+    
+    @IBAction func toggleImageChecked(sender: UIButton) {
+        
+    }
 }
