@@ -42,11 +42,36 @@ class TaskCell: UITableViewCell {
         spinner.hidden = true
     }
     
+    private func updateTask(checked: Bool) {
+        if let realm = try? Realm(),
+            let id = self.taskId,
+            let task = realm.objectForPrimaryKey(Task.self, key: id) {
+            try! realm.write {
+                task.done = checked
+            }
+            check.selected = task.done
+        }
+    }
+    
+    func didSwipeRight(swipe: UISwipeGestureRecognizer) {
+        if let realm = try? Realm(),
+            let id = self.taskId,
+            let task = realm.objectForPrimaryKey(Task.self, key: id) {
+            try! realm.write {
+                task.priority = 1
+                configureCellForTask(task)
+            }
+        }
+    }
     override func awakeFromNib() {
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeRight))
+        swipeRight.direction = .Right
+        contentView.addGestureRecognizer(swipeRight)
         
     }
     
     @IBAction func toggleImageChecked(sender: UIButton) {
-        
+        updateTask(!check.selected)
     }
 }
