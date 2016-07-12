@@ -29,7 +29,6 @@ class TasksViewController: UITableViewController {
     
     var tasks = [String]()
     
-    
     @IBAction func toggleFilter(sender: UIButton) {
     }
     
