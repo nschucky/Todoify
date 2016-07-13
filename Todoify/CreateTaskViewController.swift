@@ -38,8 +38,12 @@ class CreateTaskViewController: UITableViewController {
         
         let realm = try! Realm()
         let task = Task(title: taskTitle.text!, priority: taskPrio.selectedSegmentIndex)
+        
+        let user = users[taskUsers.selectedSegmentIndex]
+        
+        
         try! realm.write {
-            realm.add(task)
+            user.tasks.append(task)
         }
         
         navigationController!.popViewControllerAnimated(true)
