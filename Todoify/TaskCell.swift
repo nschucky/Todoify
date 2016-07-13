@@ -59,7 +59,6 @@ class TaskCell: UITableViewCell {
             let task = realm.objectForPrimaryKey(Task.self, key: id) {
             try! realm.write {
                 task.priority = 1
-                configureCellForTask(task)
             }
         }
     }
@@ -69,6 +68,19 @@ class TaskCell: UITableViewCell {
         swipeRight.direction = .Right
         contentView.addGestureRecognizer(swipeRight)
         
+        contentView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPress)))
+        
+    }
+    
+    func didLongPress(press: UILongPressGestureRecognizer) {
+        if press.state == .Began {
+            spinner.hidden = false
+            spinner.startAnimating()
+            delay(2.0, completion: { 
+                self.spinner.hidden = true
+                self.updateTask(true)
+            })
+        }
     }
     
     @IBAction func toggleImageChecked(sender: UIButton) {
