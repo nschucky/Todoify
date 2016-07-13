@@ -24,18 +24,23 @@ import UIKit
 import RealmSwift
 
 func delay(seconds: Double, completion: ()->Void) {
-  let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * seconds ))
-  dispatch_after(popTime, dispatch_get_main_queue(), completion)
+    let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * seconds ))
+    dispatch_after(popTime, dispatch_get_main_queue(), completion)
 }
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
-  var window: UIWindow?
-  
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
-    TestData.defaults()
-    return true
-  }
+    var window: UIWindow?
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        var config = Realm.Configuration()
+        config.deleteRealmIfMigrationNeeded = true
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        TestData.defaults()
+        return true
+    }
 }

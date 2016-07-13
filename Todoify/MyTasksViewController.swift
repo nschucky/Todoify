@@ -24,24 +24,36 @@ import UIKit
 import RealmSwift
 
 class MyTasksViewController: UITableViewController {
-  
-  var tasks = [String]()
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-  
-  //MARK: - Table methods
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return tasks.count
-  }
-  
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("MyTaskCell")!
-    return cell
-  }
-  
-  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return "You have \(tasks.count) tasks"
-  }
+    
+    var tasks: Results<Task>!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let realm = try! Realm()
+        let me = realm.objects(User).filter("name = 'Me'").first!
+        tasks = me.tasks.filter("done = %@", false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+    }
+    
+    //MARK: - Table methods
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tasks.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("MyTaskCell")!
+        let task = tasks[indexPath.row]
+        cell.textLabel!.text = task.priorityText
+        cell.textLabel!.textColor = task.priorityColor
+        cell.detailTextLabel!.text = task.title
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "You have \(tasks.count) tasks"
+    }
 }

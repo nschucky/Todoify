@@ -31,8 +31,7 @@ class TasksViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let realm = try! Realm()
-        tasks = realm.objects(Task)
+        tasks = getTasks(false)
         
     }
     
@@ -41,7 +40,25 @@ class TasksViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func getTasks(done: Bool) -> Results<Task> {
+        let realm = try! Realm()
+        tasks = realm.objects(Task)
+        
+        if done {
+            tasks = tasks.filter("done = true")
+        }
+        
+        return tasks.sorted([
+            SortDescriptor(property: "priority", ascending: false),
+            SortDescriptor(property: "created", ascending: false)
+            
+            ])
+    }
+    
     @IBAction func toggleFilter(sender: UIButton) {
+        sender.selected = !sender.selected
+        tasks = getTasks(sender.selected)
+        tableView.reloadData()
     }
     
     //MARK: - Table methods

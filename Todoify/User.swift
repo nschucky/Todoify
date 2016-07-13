@@ -26,6 +26,8 @@ import RealmSwift
 class User: Object {
     dynamic var name = ""
     
+    let tasks = List<Task>()
+    
     convenience init(name: String) {
         self.init()
         self.name = name
