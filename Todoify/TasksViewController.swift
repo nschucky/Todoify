@@ -28,16 +28,18 @@ class TasksViewController: UITableViewController {
     @IBOutlet weak var filterButton: UIButton!
     
     var tasks: Results<Task>!
+    var subscription: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tasks = getTasks(false)
         
+        subscription = notificationSubscription(tasks)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
     }
     
     func getTasks(done: Bool) -> Results<Task> {
@@ -55,10 +57,36 @@ class TasksViewController: UITableViewController {
             ])
     }
     
+    func notificationSubscription(tasks: Results<Task>) -> NotificationToken {
+        return tasks.addNotificationBlock { [weak self] (changes: RealmCollectionChange<Results<Task>>) in
+            self?.updateUI(changes)
+        }
+    }
+    
+    func updateUI(changes: RealmCollectionChange<Results<Task>>) {
+        switch changes {
+        case .Initial(_):
+            tableView.reloadData()
+        case .Update(_, let deletions, let insertions, _):
+            
+            tableView.beginUpdates()
+            
+            tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) } , withRowAnimation: .Automatic)
+            
+            tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) } , withRowAnimation: .Automatic)
+            
+            tableView.endUpdates()
+            
+            break
+        case .Error(let error):
+            print(error)
+        }
+    }
+    
     @IBAction func toggleFilter(sender: UIButton) {
         sender.selected = !sender.selected
         tasks = getTasks(sender.selected)
-        tableView.reloadData()
+        subscription = notificationSubscription(tasks)
     }
     
     //MARK: - Table methods
@@ -83,7 +111,6 @@ class TasksViewController: UITableViewController {
                 let task = self.tasks[indexPath.row]
                 self.tasks.realm!.delete(task)
             }
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
     
